@@ -14,11 +14,11 @@ float rmsValue(vector<float> arr, float n)
   
     // Calculul patratului 
     for (int i = 0; i < n; i++) { 
-        square += pow(arr[i], 2); 
+        square += arr[i] * arr[i]; 
     } 
   
     // Calculul mediei 
-    mean = (square / (float)(n)); 
+    mean = square / (float)(n); 
   
     // Calculul radacini 
     root = sqrt(mean); 

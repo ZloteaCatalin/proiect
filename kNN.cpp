@@ -1,14 +1,19 @@
 // Program C++ pentru a gasi grupuri necunoscute
 // Puncte care folosesc algoritmul kNN (k- nearest neighbour) 
 #include <bits/stdc++.h> 
+#include<string.h>
+#include<stdio.h>
 using namespace std; 
   
-struct Punct 
-{ 
+
+// definirea clasei Punct
+class Punct 
+{
+	public:
     int val;     // grupul de puncte
     double x, y;     // coordonatele punctului
-    double distanta; // distanta fata de punctul de testare 
-}; 
+    double distanta; // distanta fata de punctul de testare 	
+
   
 // Functie folosita pentru a sorta un sir de puncte prin cresterea ordinii distantei
 bool comparare(Punct a, Punct b) 
@@ -19,21 +24,33 @@ bool comparare(Punct a, Punct b)
 // Aceasta functie gaseste clasificarea punctului p folosind algoritmul k nearest neighbour
 // Presupune trei grupuri si returneaza 0 daca p apartine grupului 0 (emg healthy), 1 daca p apartine grupului de 1(emg myopathy), altfel 2 daca p apartine grupului de 2(emg neuropathy)
 int clasificarePunct(Punct arr[], int n, int k, Punct p) 
-{ 
+{  int i;
     // Completeaza distantele tuturor punctelor de la p.
-    for (int i = 0; i < n; i++) 
+    for ( i = 0; i < n; i++) 
         arr[i].distanta = 
             sqrt((arr[i].x - p.x) * (arr[i].x - p.x) + 
                  (arr[i].y - p.y) * (arr[i].y - p.y)); 
   
     // Sorteaza punctele dupa distanta de la p
-    sort(arr, arr+n, comparare);  
+	 for (i = n-1; i >= 0; i--)
+   {
+      for (int j = 1; j = i; j++)
+       {
+         if (comparare (arr[j-1], arr[j])==0)
+            {
+              Punct temp = arr[j-1];
+              arr[j-1] = arr[j];
+              arr[j] = temp; 
+			} 
+		} 
+    }
 
-  
-    // Acum consideram primele k elemnete si trei grupuri
+	// Acum consideram primele k elemnete si trei grupuri
     int freq1 = 0;     // frecventa grupului de 0 (emg healthy)
     int freq2 = 0;     // frecventa grupului de 1 (emg myopathy)
-    int freq3 = 0;     // frecventa grupului de 2 (emg neuropathy)
+    int freq3 = 0;     // frecventa grupului de 2 (emg neuropathy) 
+    int cont[3] = {0}; 
+    int valoare=0;
     for (int i = 0; i < k; i++) 
     { 
         if (arr[i].val == 0) 
@@ -43,20 +60,26 @@ int clasificarePunct(Punct arr[], int n, int k, Punct p)
         else if (arr[i].val == 2) 
             freq3++; 
     } 
+     
+	
+	if(freq1>freq2){ 
+		if(freq1>freq3){ 
+			return 0; 
+	    } else{
+	    	 return 2;
+           }  
+  } else {
+  	   	if(freq2>freq3){ 
+		  return 1; 
+	    } else{
+	    	 return 2;
+           }  
+  } 
   
-    if(freq1 > freq2)
-    	return 0; 
-    else return 1; 
-    
-	if(freq1 > freq3 ) 
-    	return 0; 
-    else return 2; 
-    
-	if(freq2 > freq3) 
-		return 1;
-	else return 2;
+			
 } 
-  
+}
+
 
 int main() 
 { 
@@ -99,8 +122,8 @@ int main()
     arr[8].y = 3; 
     arr[8].val = 1; 
   
-    arr[9].x = 3; 
-    arr[9].y = 10; 
+    arr[9].x = 5; 
+    arr[9].y = 5; 
     arr[9].val = 2; 
   
     // punctul de testare
