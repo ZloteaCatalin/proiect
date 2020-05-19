@@ -33,20 +33,20 @@ vector<float> vect1;
 vector<float> vect2;
 vector<float> vect3;
     
-	FILE *fptr1;
+	FILE *fptr1; // pointer catre fisier 
     float x;
-    if ((fptr1 = fopen("emg_healthy.txt", "r")) == NULL) {
-        printf("Error! opening file");
-        // Program exits if file pointer returns NULL.
+    if ((fptr1 = fopen("emg_healthy.txt", "r")) == NULL) { // deschidem fisierul 
+        printf("Error! opening file"); 
+        // Iesim din program daca pointerul catre fisier este NULL
         exit(1);
     }
    
-    while (fscanf(fptr1,"%f",&x) != EOF) {
-        vect1.push_back(x);
+    while (fscanf(fptr1,"%f",&x) != EOF) { // EOF = End Of File (vectorul care pointeaza catre finalul fisierului) 
+        vect1.push_back(x); // adaugam in vectorul vect1 valoarea x citita din fisier
     }   
-    fclose(fptr1);
+    fclose(fptr1); // inchidem fisierul
     
-    float n1 = sizeof(vect1) / sizeof(vect1[0]); 
+    float n1 = sizeof(vect1) / sizeof(vect1[0]);
     float rezultat1; 
     rezultat1=rmsValue(vect1, n1); 
     cout<<endl<<"RMS emg healty: "<<rezultat1;
@@ -56,7 +56,7 @@ vector<float> vect3;
     float y;
     if ((fptr2 = fopen("emg_myopathy.txt", "r")) == NULL) {
         printf("Error! opening file");
-        // Program exits if file pointer returns NULL.
+        // Iesim din program daca pointerul catre fisier este NULL
         exit(1);
     }
    
@@ -76,7 +76,7 @@ vector<float> vect3;
     float z;
     if ((fptr3 = fopen("emg_neuropathy.txt", "r")) == NULL) {
         printf("Error! opening file");
-        // Program exits if file pointer returns NULL.
+        // Iesim din program daca pointerul catre fisier este NULL
         exit(1);
     }
    
